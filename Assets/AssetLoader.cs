@@ -35,13 +35,21 @@ public static class AssetLoader {
         var json = File.ReadAllText(jsonFullPath);
         return JsonConvert.DeserializeObject<T>(json);
     }
+    
+    private static readonly Dictionary<string, Sprite> _sprites = new();
 
-    public static Sprite LoadSprite(string spritePath) { // TODO: store sprites in a dictionary to avoid loading the same sprite multiple times
+    public static Sprite LoadSprite(string spritePath) {
         const string spriteBasePath = "Sprites";
+        
         if (string.IsNullOrEmpty(spritePath)) {
             Debug.LogError("Sprite path is null or empty.");
             return null!;
         }
+        
+        if (_sprites.TryGetValue(spritePath, out var cachedSprite)) {
+            return cachedSprite;
+        }
+        
         var spriteFullPath = Path.Combine(Application.streamingAssetsPath, spriteBasePath, spritePath);
         if (!File.Exists(spriteFullPath)) {
             Debug.LogError($"Sprite file '{spriteFullPath}' does not exist.");
@@ -58,6 +66,10 @@ public static class AssetLoader {
         sprite.texture.filterMode = FilterMode.Point;
         sprite.texture.wrapMode = TextureWrapMode.Clamp;
         sprite.texture.Apply();
+        Debug.Log($"Sprite '{sprite.name}' loaded from '{spriteFullPath}'.");
+
+        _sprites[spritePath] = sprite; // Cache the loaded sprite
+
         return sprite;
     }
 
