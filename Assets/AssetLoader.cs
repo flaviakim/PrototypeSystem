@@ -59,7 +59,7 @@ public static class AssetLoader {
         var bytes = File.ReadAllBytes(spriteFullPath);
         var texture = new Texture2D(1, 1);
         texture.LoadImage(bytes);
-        const int pixelsPerUnit = 32;
+        const int pixelsPerUnit = 16; // Adjust this value based on your game's requirements
         var pivot = new Vector2(0, 0);
         var sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), pivot, pixelsPerUnit);
         sprite.name = Path.GetFileNameWithoutExtension(spritePath);
