@@ -60,7 +60,7 @@ public static class AssetLoader {
         var texture = new Texture2D(1, 1);
         texture.LoadImage(bytes);
         const int pixelsPerUnit = 16; // Adjust this value based on your game's requirements
-        var pivot = new Vector2(0, 0);
+        var pivot = new Vector2(.5f, .5f);
         var sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), pivot, pixelsPerUnit);
         sprite.name = Path.GetFileNameWithoutExtension(spritePath);
         sprite.texture.filterMode = FilterMode.Point;
