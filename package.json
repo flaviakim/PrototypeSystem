@@ -1,0 +1,20 @@
+{
+    "name": "com.flaviakim.prototypesystem",
+    "version": "0.1.0",
+    "unity": "2022.3",
+    "description": "A simple, reusable, easy to use prototype system for Unity to easily load dynamic content from files.",
+    "displayName": "PrototypeSystem",
+    "author": {
+        "name": "Flavia Brogle"
+    },
+    "keywords": [
+        "Prototype System",
+        "Design Patterns",
+        "Modding",
+        "Moddable"
+    ],
+    "documentationUrl": "https://github.com/flaviakim/PrototypeSystem/blob/main/README.md",
+    "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.2.1" 
+    }
+}
