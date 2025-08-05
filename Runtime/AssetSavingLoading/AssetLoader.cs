@@ -3,10 +3,13 @@ using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace Assets {
+namespace AssetSavingLoading {
     public static class AssetLoader {
 
-        public static string AssetPath => Application.streamingAssetsPath;
+        public static string AssetPath {
+            get => AssetSaverLoader.DefaultAssetPath;
+            set => AssetSaverLoader.DefaultAssetPath = value;
+        }
 
         public static List<T> LoadAllJson<T>(string directoryPath) {
             var jsonFullPath = Path.Combine(AssetPath, directoryPath);
