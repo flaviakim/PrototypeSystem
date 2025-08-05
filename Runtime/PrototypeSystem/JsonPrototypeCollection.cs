@@ -6,11 +6,11 @@ using Newtonsoft.Json;
 using UnityEngine;
 
 namespace PrototypeSystem {
-    public abstract class JsonPrototypeCollection<TPrototypeData> : DictionaryPrototypeCollection<TPrototypeData> where TPrototypeData : PrototypeData {
+    public class JsonPrototypeCollection<TPrototypeData> : DictionaryPrototypeCollection<TPrototypeData> where TPrototypeData : PrototypeData {
 
         private readonly string _directoryPath;
 
-        protected JsonPrototypeCollection(string directoryPath) {
+        public JsonPrototypeCollection(string directoryPath) {
             _directoryPath = directoryPath;
         }
 
