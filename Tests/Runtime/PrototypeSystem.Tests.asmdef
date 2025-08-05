@@ -1,0 +1,11 @@
+{
+  "name": "PrototypeSystem.Tests",
+  "references": [
+    "PrototypeSystem"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": []
+}
