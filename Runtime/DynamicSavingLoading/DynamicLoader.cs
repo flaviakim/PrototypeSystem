@@ -62,8 +62,7 @@ namespace DynamicSavingLoading {
         /// <typeparam name="T"> The type of the object to be deserialized from the JSON file.</typeparam>
         /// <returns> An object of type <typeparamref name="T"/> deserialized from the JSON file, or default if the file does not exist or cannot be deserialized.</returns>
         public static T LoadJson<T>(string jsonPath, bool isRelativeToDefaultPath = true) {
-            var jsonFullPath = isRelativeToDefaultPath ? Path.Combine(DefaultDynamicAssetPath, jsonPath)
-                : jsonPath;
+            var jsonFullPath = isRelativeToDefaultPath ? Path.Combine(DefaultDynamicAssetPath, jsonPath) : jsonPath;
             if (!File.Exists(jsonFullPath)) {
                 Debug.LogError($"Json file '{jsonFullPath}' does not exist.");
                 return default!;
