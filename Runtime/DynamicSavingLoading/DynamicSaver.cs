@@ -2,16 +2,13 @@ using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace AssetSavingLoading {
-    public static class AssetSaver {
+namespace DynamicSavingLoading {
+    public static class DynamicSaver {
 
-        public static string AssetPath {
-            get => AssetSaverLoader.DefaultAssetPath;
-            set => AssetSaverLoader.DefaultAssetPath = value;
-        }
+        public static string DefaultDynamicAssetPath { get; set; } = Application.streamingAssetsPath;
 
         public static bool TrySaveJson<T>(T jsonItem, string jsonPath, bool isOverwrite) {
-            var jsonFullPath = Path.Combine(AssetPath, jsonPath);
+            var jsonFullPath = Path.Combine(DefaultDynamicAssetPath, jsonPath);
             if (File.Exists(jsonFullPath) && !isOverwrite) {
                 Debug.LogError($"Json file '{jsonFullPath}' already exists.");
                 return false;

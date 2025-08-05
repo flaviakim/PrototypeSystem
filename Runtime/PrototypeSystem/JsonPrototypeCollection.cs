@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
-using AssetSavingLoading;
+using DynamicSavingLoading;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -18,7 +18,7 @@ namespace PrototypeSystem {
             Debug.Log($"Loading prototypes from {_directoryPath}");
             var loadedPrototypes = new Dictionary<string, TPrototypeData>();
 
-            var prototypeDatas = AssetLoader.LoadAllJson<TPrototypeData>(_directoryPath);
+            var prototypeDatas = DynamicLoader.LoadAllJson<TPrototypeData>(_directoryPath);
             foreach (var prototypeData in prototypeDatas) {
                 if (prototypeData == null) {
                     Debug.LogError("Failed to load prototypeData");
@@ -42,7 +42,7 @@ namespace PrototypeSystem {
                 Debug.LogWarning("Prototype ID cannot be null or empty.");
                 return false;
             }
-            if (!AssetSaver.TrySaveJson(prototypeData, Path.Combine(_directoryPath, prototypeData.IDName + ".json"), overwrite)) {
+            if (!DynamicSaver.TrySaveJson(prototypeData, Path.Combine(_directoryPath, prototypeData.IDName + ".json"), overwrite)) {
                 Debug.LogError($"Failed to save prototype {prototypeData.IDName}");
                 return false;
             }
