@@ -47,10 +47,12 @@ namespace PrototypeSystem.Tests.PrototypeSystem {
             Assert.IsNotNull(hut, "Building should not be null.");
             Assert.IsNotNull(hut.Data, "Building data should not be null.");
             Assert.AreEqual("hut", hut.Data.IDName, "Building IDName should match expected value.");
+            Assert.AreEqual(1, hut.Data.Floors, "Hut should have 1 floor.");
             Building villa = buildingFactory.CreateInstance("villa");
             Assert.IsNotNull(villa, "Building should not be null.");
             Assert.IsNotNull(villa.Data, "Building data should not be null.");
             Assert.AreEqual("villa", villa.Data.IDName, "Building IDName should match expected value.");
+            Assert.AreEqual(3, villa.Data.Floors, "Villa should have 3 floors.");
         }
     }
 }

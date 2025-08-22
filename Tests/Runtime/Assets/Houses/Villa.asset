@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54807edc5766455ba1380ea67a42e74a, type: 3}
   m_Name: Villa
   m_EditorClassIdentifier: PrototypeSystem.Tests::Tests.Runtime.PrototypeSystem.BuildingData
-  idName: 
-  <Floors>k__BackingField: 0
+  idName: villa
+  <Floors>k__BackingField: 3
