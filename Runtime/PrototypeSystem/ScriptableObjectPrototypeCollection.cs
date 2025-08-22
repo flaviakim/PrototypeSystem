@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace PrototypeSystem {
-    public class ScriptableObjectPrototypeCollection<TPrototypeData> : MonoBehaviour, IPrototypeCollection<TPrototypeData> where TPrototypeData : ScriptableObjectPrototypeData {
+    public abstract class ScriptableObjectPrototypeCollection<TPrototypeData> : MonoBehaviour, IPrototypeCollection<TPrototypeData> where TPrototypeData : ScriptableObjectPrototypeData {
         [SerializeField]
         private List<TPrototypeData> prototypeDataObjects = new();
         

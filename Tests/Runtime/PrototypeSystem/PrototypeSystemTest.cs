@@ -1,8 +1,7 @@
 using System.IO;
 using DynamicSavingLoading;
-using JetBrains.Annotations;
 using NUnit.Framework;
-using UnityEngine;
+using Tests.Runtime.PrototypeSystem;
 
 namespace PrototypeSystem.Tests.PrototypeSystem {
     [TestFixture]
@@ -40,39 +39,18 @@ namespace PrototypeSystem.Tests.PrototypeSystem {
             Assert.AreEqual(Plant2Name, plant2.Data.Name, "Plant Name should match expected value.");
             Assert.AreEqual(Plant2Description, plant2.Data.Description, "Plant Description should match expected value.");
         }
-        
-    }
 
-    public class PlantFactory : InstanceFactory<Plant, PlantData, PlantFactory> {
-        protected override IPrototypeCollection<PlantData> PrototypeCollection { get; } = new JsonPrototypeCollection<PlantData>("Plants");
-        
-        public Plant CreateInstance(string idName) {
-            var plantData = PrototypeCollection.TryGetPrototypeForName(idName);
-            if (plantData == null) {
-                Debug.LogError($"Couldn't find plant with ID {idName}");
-                return null;
-            }
-            var plant = new Plant(plantData);
-            return plant;
+        [Test]
+        public void TestCreatingAnInstanceWithSerializedObject() {
+            var buildingFactory = new BuildingFactory();
+            Building hut = buildingFactory.CreateInstance("hut");
+            Assert.IsNotNull(hut, "Building should not be null.");
+            Assert.IsNotNull(hut.Data, "Building data should not be null.");
+            Assert.AreEqual("hut", hut.Data.IDName, "Building IDName should match expected value.");
+            Building villa = buildingFactory.CreateInstance("villa");
+            Assert.IsNotNull(villa, "Building should not be null.");
+            Assert.IsNotNull(villa.Data, "Building data should not be null.");
+            Assert.AreEqual("villa", villa.Data.IDName, "Building IDName should match expected value.");
         }
-    }
-
-    public class Plant : IInstance<PlantData> {
-        public string IDName { get; }
-        public PlantData Data { get; }
-
-        public Plant(PlantData data) {
-            Data = data;
-            IDName = data.IDName;
-        }
-    }
-    
-    public class PlantData : PrototypeData {
-        public PlantData(string idName, string name, string description) : base(idName) {
-            Name = name;
-            Description = description;
-        }
-        public string Name { get; }
-        [CanBeNull] public string Description { get; }
     }
 }
