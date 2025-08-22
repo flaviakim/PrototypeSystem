@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,10 +7,19 @@ namespace PrototypeSystem {
         [SerializeField]
         private List<TPrototypeData> prototypeDataObjects = new();
         
-        private readonly ScriptableObjectDictionaryPrototypeCollection _dictionaryCollection;
+        [SerializeField]
+        private string pathToLoadPrototypeObjects = string.Empty;
+        
+        private ScriptableObjectDictionaryPrototypeCollection _dictionaryCollection;
 
-        public ScriptableObjectPrototypeCollection() {
+        private void Awake() {
             _dictionaryCollection = new ScriptableObjectDictionaryPrototypeCollection(this);
+            if (!string.IsNullOrEmpty(pathToLoadPrototypeObjects)) {
+                var prototypeObjects = Resources.LoadAll<TPrototypeData>(pathToLoadPrototypeObjects);
+                foreach (var prototypeObject in prototypeObjects) {
+                    Add(prototypeObject);
+                }
+            }
         }
 
         public void Add(TPrototypeData prototypeData) {
