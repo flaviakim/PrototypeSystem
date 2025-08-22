@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 
 namespace PrototypeSystem {
-    public abstract class DictionaryPrototypeCollection<TPrototypeData> : IPrototypeCollection<TPrototypeData> where TPrototypeData : PrototypeData {
+    public abstract class DictionaryPrototypeCollection<TPrototypeData> : IPrototypeCollection<TPrototypeData> where TPrototypeData : IPrototypeData {
         private Dictionary<string, TPrototypeData> _prototypes;
         private Dictionary<string, TPrototypeData> Prototypes => _prototypes ??= LoadPrototypeDatas();
 

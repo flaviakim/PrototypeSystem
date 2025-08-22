@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using UnityEngine;
 
 namespace PrototypeSystem {
-    public class JsonPrototypeCollection<TPrototypeData> : DictionaryPrototypeCollection<TPrototypeData> where TPrototypeData : PrototypeData {
+    public class JsonPrototypeCollection<TPrototypeData> : DictionaryPrototypeCollection<TPrototypeData> where TPrototypeData : BasePrototypeData {
 
         private readonly string _directoryPath;
 

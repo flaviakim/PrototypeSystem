@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 namespace PrototypeSystem {
     public abstract class InstanceFactory<TInstance, TPrototypeData, TFactory>
         where TInstance : IInstance<TPrototypeData>
-        where TPrototypeData : PrototypeData
+        where TPrototypeData : IPrototypeData
         where TFactory : InstanceFactory<TInstance, TPrototypeData, TFactory>, new() {
 
 
