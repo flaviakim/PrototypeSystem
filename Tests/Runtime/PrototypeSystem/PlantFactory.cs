@@ -1,12 +1,13 @@
+using System.IO;
+using DynamicSaveLoad;
 using UnityEngine;
 
 namespace PrototypeSystem.Tests.PrototypeSystem {
     public class PlantFactory : InstanceFactory<Plant, PlantData, PlantFactory> {
-        protected override IPrototypeCollection<PlantData> PrototypeCollection { get; } = new JsonPrototypeCollection<PlantData>("Plants");
+        protected override IPrototypeCollection<PlantData> PrototypeCollection { get; } = new JsonPrototypeCollection<PlantData>("Plants", new DynamicAssetManager(Path.GetFullPath("Packages/PrototypeSystem/Tests/Runtime/Assets/")));
         
         public Plant CreateInstance(string idName) {
-            var plantData = PrototypeCollection.TryGetPrototypeForName(idName);
-            if (plantData == null) {
+            if (!PrototypeCollection.TryGetPrototypeForName(idName, out PlantData plantData)) {
                 Debug.LogError($"Couldn't find plant with ID {idName}");
                 return null;
             }

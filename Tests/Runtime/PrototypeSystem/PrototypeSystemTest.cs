@@ -1,5 +1,5 @@
 using System.IO;
-using DynamicSavingLoading;
+using DynamicSaveLoad;
 using NUnit.Framework;
 using Tests.Runtime.PrototypeSystem;
 
@@ -17,11 +17,6 @@ namespace PrototypeSystem.Tests.PrototypeSystem {
         private const string Plant2IDName = "plant2";
         private const string Plant2Name = "Plant 2";
         private const string Plant2Description = "A useful plant.";
-
-        [SetUp]
-        public void Setup() {
-            DynamicLoader.DefaultDynamicAssetPath = Path.GetFullPath(BasePath);
-        }
         
         [Test]
         public void TestCreatingAPlant() {

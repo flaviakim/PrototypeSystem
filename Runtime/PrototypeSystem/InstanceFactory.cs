@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 namespace PrototypeSystem {
     public abstract class InstanceFactory<TInstance, TPrototypeData, TFactory>
@@ -13,9 +12,8 @@ namespace PrototypeSystem {
 
         protected abstract IPrototypeCollection<TPrototypeData> PrototypeCollection { get; }
 
-        [CanBeNull]
-        protected TPrototypeData TryGetPrototypeForName(string idName) {
-            return PrototypeCollection.TryGetPrototypeForName(idName);
+        protected bool TryGetPrototypeForName(string idName, out TPrototypeData prototype) {
+            return PrototypeCollection.TryGetPrototypeForName(idName, out prototype);
         }
 
         public List<TPrototypeData> GetPrototypes() {

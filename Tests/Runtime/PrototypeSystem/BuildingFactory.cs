@@ -22,8 +22,7 @@ namespace PrototypeSystem.Tests.PrototypeSystem {
         // }
 
         public Building CreateInstance(string idName) {
-            var buildingData = PrototypeCollection.TryGetPrototypeForName(idName);
-            if (buildingData == null) {
+            if (!PrototypeCollection.TryGetPrototypeForName(idName, out BuildingData buildingData)) {
                 Debug.LogError($"Couldn't find building with ID {idName}");
                 return null;
             }
