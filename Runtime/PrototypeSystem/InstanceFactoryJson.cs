@@ -2,7 +2,7 @@ using DynamicSaveLoad;
 
 namespace PrototypeSystem {
     public abstract class InstanceFactoryJson<TInstance, TPrototypeData, TInitializationData> : InstanceFactoryBase<TInstance, TPrototypeData, TInitializationData> 
-        where TInstance : Instance<TPrototypeData, TInitializationData>
+        where TInstance : Instance<TPrototypeData>
         where TPrototypeData : IPrototypeData
         where TInitializationData : IInitializationData {
         protected override IPrototypeCollection<TPrototypeData> PrototypeCollection { get; }

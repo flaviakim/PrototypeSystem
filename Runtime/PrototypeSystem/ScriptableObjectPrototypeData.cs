@@ -14,18 +14,4 @@ namespace PrototypeSystem {
 
         public string IDName => idName;
     }
-
-    public abstract class MonoInstance<TPrototypeData, TInitializationData> : MonoBehaviour, IInstance<TPrototypeData, TInitializationData> 
-            where TPrototypeData : ScriptableObjectPrototypeData
-            where TInitializationData : IInitializationData {
-        
-        public abstract TPrototypeData PrototypeData { get; protected set; }
-
-        public void Initialize(TPrototypeData prototypeData, TInitializationData initializationData) {
-            PrototypeData = prototypeData;
-            Initialize(initializationData);
-        }
-
-        protected abstract void Initialize(TInitializationData initializationData);
-    }
 }

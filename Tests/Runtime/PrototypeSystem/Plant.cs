@@ -1,5 +1,5 @@
 namespace PrototypeSystem.Tests.PrototypeSystem {
-    public class Plant : Instance<PlantPrototypeData, IInitializationData.EmptyInitializationData> {
+    public class Plant : Instance<PlantPrototypeData> {
         public PlantPrototypeData PrototypeData { get; private set; }
         
         public float Growth { get; private set; }

@@ -42,7 +42,8 @@ namespace PrototypeSystem.Tests.PrototypeSystem {
 
         [Test]
         public void TestCreatingAnInstanceWithSerializedObject() {
-            var buildingFactory = new BuildingFactory();
+            // var buildingFactory = new BuildingFactory();
+            var buildingFactory = new MonoInstanceFactory<Building, BuildingPrototypeData, BuildingInitializationData>();
             Building hut = buildingFactory.CreateInstance("hut", new BuildingInitializationData(Vector2Int.one));
             Assert.IsNotNull(hut, "Building should not be null.");
             Assert.IsNotNull(hut.PrototypeData, "Building data should not be null.");

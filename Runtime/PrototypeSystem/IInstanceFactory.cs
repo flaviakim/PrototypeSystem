@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace PrototypeSystem {
     public interface IInstanceFactory<out TInstance, TPrototypeData, in TInitializationData>
-        where TInstance : IInstance<TPrototypeData, TInitializationData>
+        where TInstance : IInstance<TPrototypeData>
         where TPrototypeData : IPrototypeData
         where TInitializationData : IInitializationData {
         TInstance CreateInstance(TPrototypeData prototype, TInitializationData initializationData);

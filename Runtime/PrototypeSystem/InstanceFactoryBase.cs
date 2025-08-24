@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PrototypeSystem {
     public abstract class InstanceFactoryBase<TInstance, TPrototypeData, TInitializationData> : IInstanceFactory<TInstance, TPrototypeData, TInitializationData> 
-        where TInstance : IInstance<TPrototypeData, TInitializationData> 
+        where TInstance : IInstance<TPrototypeData> 
         where TPrototypeData : IPrototypeData
         where TInitializationData : IInitializationData {
         protected abstract IPrototypeCollection<TPrototypeData> PrototypeCollection { get; }
