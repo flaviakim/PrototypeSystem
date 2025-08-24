@@ -1,6 +1,6 @@
 {
     "name": "com.flaviakim.prototypesystem",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "unity": "6000.0",
     "description": "A simple, reusable, easy to use prototype system for Unity to easily load dynamic content from files.",
     "displayName": "PrototypeSystem",
