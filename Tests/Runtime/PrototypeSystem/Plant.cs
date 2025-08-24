@@ -1,10 +1,10 @@
 namespace PrototypeSystem.Tests.PrototypeSystem {
-    public class Plant : IInstance<PlantPrototypeData, IInitializationData> {
+    public class Plant : Instance<PlantPrototypeData, IInitializationData.EmptyInitializationData> {
         public PlantPrototypeData PrototypeData { get; private set; }
         
         public float Growth { get; private set; }
 
-        public void Initialize(PlantPrototypeData prototypeData, IInitializationData initializationData) {
+        public Plant(PlantPrototypeData prototypeData, IInitializationData initializationData) {
             PrototypeData = prototypeData;
             Growth = 0;
         }

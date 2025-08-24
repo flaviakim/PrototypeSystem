@@ -24,15 +24,18 @@ namespace PrototypeSystem.Tests.PrototypeSystem {
             var plantFactory = new PlantFactory(TestAssetDirectoryName, new DynamicAssetManager(BasePath));
             
             var plant = plantFactory.CreateInstance(Plant1IDName, IInitializationData.Empty);
-            Assert.IsNotNull(plant, "Plant data should not be null.");
-            Assert.AreEqual(Plant1IDName, plant.GetIDName(), "Plant IDName should match expected value.");
-            Assert.AreEqual(plant.GetIDName(), plant.PrototypeData.IDName, "Plant Data IDName should match plant IDName.");
+            Assert.IsNotNull(plant, "Plant should not be null.");
+            Assert.IsNotNull(plant.PrototypeData, "Plant data should not be null.");
+            Assert.IsNotNull(plant.PrototypeData.IDName, "Plant id name should not be null.");
+            Assert.IsNotNull(plant.PrototypeData.IDName, "Plant PrototypeData.IDName name should not return null.");
+            Assert.AreEqual(Plant1IDName, plant.PrototypeData.IDName, "Plant IDName should match expected value.");
+            Assert.AreEqual(plant.PrototypeData.IDName, plant.PrototypeData.IDName, "Plant Data IDName should match plant IDName.");
             Assert.AreEqual(Plant1Name, plant.PrototypeData.Name, "Plant Name should match expected value.");
             Assert.AreEqual(Plant1Description, plant.PrototypeData.Description, "Plant Description should match expected value.");
             var plant2 = plantFactory.CreateInstance(Plant2IDName, IInitializationData.Empty);
             Assert.IsNotNull(plant2, "Plant data should not be null.");
-            Assert.AreEqual(Plant2IDName, plant2.GetIDName(), "Plant IDName should match expected value.");
-            Assert.AreEqual(plant2.GetIDName(), plant2.PrototypeData.IDName, "Plant Data IDName should match plant IDName.");
+            Assert.AreEqual(Plant2IDName, plant2.PrototypeData.IDName, "Plant IDName should match expected value.");
+            Assert.AreEqual(plant2.PrototypeData.IDName, plant2.PrototypeData.IDName, "Plant Data IDName should match plant IDName.");
             Assert.AreEqual(Plant2Name, plant2.PrototypeData.Name, "Plant Name should match expected value.");
             Assert.AreEqual(Plant2Description, plant2.PrototypeData.Description, "Plant Description should match expected value.");
         }

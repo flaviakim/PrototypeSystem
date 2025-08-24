@@ -12,7 +12,7 @@ namespace PrototypeSystem {
         /// <summary>
         /// Ease of use implementation when an IInstance does not need any specific InitializationData that is not already in the prototype. 
         /// </summary>
-        public static IInitializationData Empty => new EmptyInitializationData();
+        public static readonly EmptyInitializationData Empty = new();
         
         public class EmptyInitializationData : IInitializationData { }
     }

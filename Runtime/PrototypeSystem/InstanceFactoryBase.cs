@@ -13,6 +13,7 @@ namespace PrototypeSystem {
                 Debug.LogError($"Couldn't find plant with ID {idName}");
                 return default;
             }
+            Debug.Assert(prototypeData != null, "prototypeData != null");
             return CreateInstance(prototypeData, initializationData);
         }
 
