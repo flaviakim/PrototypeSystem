@@ -25,32 +25,30 @@ namespace DynamicSavingLoading {
         /// Uses the <see cref="DefaultDynamicAssetPath"/> as the base path for the directory.
         /// Uses <see cref="LoadJson{T}(string,bool)"/> to load each JSON file.
         ///
-        /// Returns null if the directory does not exist.
-        /// Returns an empty list if no valid JSON files are found.
+        /// Returns an empty list if the directory does not exist or if no valid JSON files are found.
         /// </summary>
         /// <param name="directoryPath"> The relative path to the directory containing the JSON files, starting from <see cref="DefaultDynamicAssetPath"/>.</param>
         /// <param name="recursive"> If true, the method will also search in subdirectories.</param>
         /// <typeparam name="T"> The type of the objects to be loaded from the JSON files.</typeparam>
-        /// <returns> A list of objects of type <typeparamref name="T"/> loaded from the JSON files, or null if the directory does not exist.</returns>
-        public static List<T> LoadAllJson<T>(string directoryPath, bool recursive = true) {
+        /// <returns> A read-only list of objects of type <typeparamref name="T"/> loaded from the JSON files.</returns>
+
+        public static IReadOnlyList<T> LoadAllJson<T>(string directoryPath, bool recursive = true) {
             var jsonFullPath = Path.Combine(DefaultDynamicAssetPath, directoryPath);
             if (!Directory.Exists(jsonFullPath)) {
-                Debug.LogError($"Json directory '{jsonFullPath}' does not exist.");
-                return null!;
+                Debug.LogError($"JSON directory '{jsonFullPath}' does not exist.");
+                return Array.Empty<T>();
             }
-
+    
             var files = Directory.GetFiles(jsonFullPath, "*.json", recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
-            Debug.Log($"Found {files.Length} json files in {jsonFullPath}");
-            var jsonList = new List<T>();
+    
+            var jsonList = new List<T>(files.Length);
             foreach (var jsonFile in files) {
-                var jsonItem = LoadJson<T>(jsonFile);
-                if (jsonItem == null) {
+                if (TryLoadJson<T>(jsonFile, false, out var jsonItem)) {
+                    jsonList.Add(jsonItem);
+                } else {
                     Debug.LogWarning($"Failed to load json item from file '{jsonFile}' as type '{typeof(T).Name}'.");
-                    continue;
                 }
-                jsonList.Add(jsonItem);
             }
-            
             return jsonList;
         }
 
@@ -61,15 +59,24 @@ namespace DynamicSavingLoading {
         /// <param name="isRelativeToDefaultPath"> If true, the path is considered relative to <see cref="DefaultDynamicAssetPath"/>. If false, the path is treated as an absolute path.</param>
         /// <typeparam name="T"> The type of the object to be deserialized from the JSON file.</typeparam>
         /// <returns> An object of type <typeparamref name="T"/> deserialized from the JSON file, or default if the file does not exist or cannot be deserialized.</returns>
-        public static T LoadJson<T>(string jsonPath, bool isRelativeToDefaultPath = true) {
+        public static bool TryLoadJson<T>(string jsonPath, bool isRelativeToDefaultPath = true, out T result) {
             var jsonFullPath = isRelativeToDefaultPath ? Path.Combine(DefaultDynamicAssetPath, jsonPath) : jsonPath;
             if (!File.Exists(jsonFullPath)) {
-                Debug.LogError($"Json file '{jsonFullPath}' does not exist.");
-                return default!;
+                Debug.LogWarning($"JSON file '{jsonFullPath}' does not exist.");
+                result = default!;
+                return false;
             }
-
-            var json = File.ReadAllText(jsonFullPath);
-            return JsonConvert.DeserializeObject<T>(json);
+            
+            try {
+                var json = File.ReadAllText(jsonFullPath);
+                result = JsonConvert.DeserializeObject<T>(json)!;
+                return result != null;
+            }
+            catch (JsonException ex) {
+                Debug.LogError($"Failed to deserialize JSON file '{jsonFullPath}': {ex.Message}");
+                result = default!;
+                return false;
+            }
         }
     
         private static readonly Dictionary<string, Sprite> Sprites = new();
@@ -110,6 +117,14 @@ namespace DynamicSavingLoading {
             }
 
             return sprite;
+        }
+        
+        public static void ClearSpriteCache() {
+            foreach (var sprite in Sprites.Values) {
+                if (sprite != null) Object.Destroy(sprite.texture);
+                Object.Destroy(sprite);
+            }
+            Sprites.Clear();
         }
 
         public static string LoadText(string textPath) {
