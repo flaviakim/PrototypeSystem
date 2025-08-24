@@ -1,11 +1,22 @@
 namespace PrototypeSystem.Tests.PrototypeSystem {
-    public class Plant : IInstance<PlantData> {
-        public string IDName { get; }
-        public PlantData Data { get; }
+    public class Plant : IInstance<PlantPrototypeData, IInitializationData> {
+        public PlantPrototypeData PrototypeData { get; private set; }
+        
+        public float Growth { get; private set; }
 
-        public Plant(PlantData data) {
-            Data = data;
-            IDName = data.IDName;
+        public void Initialize(PlantPrototypeData prototypeData, IInitializationData initializationData) {
+            PrototypeData = prototypeData;
+            Growth = 0;
         }
     }
+    
+    public class PlantPrototypeData : BasePrototypeData {
+        public PlantPrototypeData(string idName, string name, string description) : base(idName) {
+            Name = name;
+            Description = description;
+        }
+        public string Name { get; }
+        public string Description { get; }
+    }
+    
 }

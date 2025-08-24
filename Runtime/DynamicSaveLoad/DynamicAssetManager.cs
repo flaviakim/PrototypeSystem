@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using UnityEngine;
 
 namespace DynamicSaveLoad {
     /// <summary>
@@ -31,6 +32,8 @@ namespace DynamicSaveLoad {
             JsonAsync = new JsonFileStorageAsync(RootPath);
             TextAsync = new TextFileStorageAsync(RootPath);
             SpritesAsync = new SpriteLoaderAsync(RootPath, _sharedSpriteCache);
+
+            Debug.Log($"Created DynamicAssetManager with root path {RootPath}");
         }
 
         public void ClearSpriteCache() => _sharedSpriteCache.Clear();

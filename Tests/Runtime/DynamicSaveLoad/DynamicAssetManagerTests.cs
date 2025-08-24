@@ -24,6 +24,7 @@ namespace PrototypeSystem.Tests.DynamicSaveLoad
         {
             // Use temporary directory inside Application.temporaryCachePath
             _testRootPath = Path.Combine(Application.temporaryCachePath, TestAssetDirectoryName);
+            Debug.Log($"Full path: {Path.GetFullPath(_testRootPath)}, rootPath: {_testRootPath}");
             Directory.CreateDirectory(_testRootPath);
             Directory.CreateDirectory(Path.Combine(_testRootPath, "NestedTestAsset"));
 
@@ -61,6 +62,8 @@ namespace PrototypeSystem.Tests.DynamicSaveLoad
             Assert.AreEqual(2, loaded.Count);
             Assert.AreEqual("TestAsset1", loaded[0].Name);
             Assert.AreEqual("TestAsset2", loaded[1].Name);
+            Assert.AreEqual(null, loaded[0].Description);
+            Assert.AreEqual("This is a test asset with an optional property.", loaded[1].Description);
         }
 
         [Test]

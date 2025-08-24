@@ -9,7 +9,9 @@ namespace DynamicSaveLoad {
     public sealed class JsonFileStorage : IJsonStorage {
         private readonly string _basePath;
 
-        public JsonFileStorage(string basePath) => _basePath = basePath;
+        public JsonFileStorage(string basePath) {
+            _basePath = basePath;
+        }
 
         public bool TryLoad<T>(string relativePath, out T result) {
             var fullPath = Path.Combine(_basePath, relativePath);

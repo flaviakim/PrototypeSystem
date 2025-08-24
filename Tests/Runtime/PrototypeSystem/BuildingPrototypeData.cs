@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace Tests.Runtime.PrototypeSystem {
     [CreateAssetMenu(menuName = "Prototype System/Building Data", fileName = "New Building Data")]
-    public class BuildingData : ScriptableObjectPrototypeData {
+    public class BuildingPrototypeData : ScriptableObjectPrototypeData {
         [field:SerializeField] public int Floors { get; set; }
+        [field:SerializeField] public float InitialCleanliness { get; set; }
     }
 }

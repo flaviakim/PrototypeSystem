@@ -4,7 +4,8 @@ using UnityEditor;
 using UnityEngine;
 
 namespace PrototypeSystem {
-    public class ScriptableObjectPrototypeCollection<TPrototypeData> : DictionaryPrototypeCollection<TPrototypeData> where TPrototypeData : ScriptableObjectPrototypeData {
+    public class ScriptableObjectPrototypeCollection<TPrototypeData> : DictionaryPrototypeCollection<TPrototypeData>
+        where TPrototypeData : ScriptableObjectPrototypeData {
 
         protected override Dictionary<string, TPrototypeData> LoadPrototypeDatas() {
             var prototypeDatas = new Dictionary<string, TPrototypeData>();

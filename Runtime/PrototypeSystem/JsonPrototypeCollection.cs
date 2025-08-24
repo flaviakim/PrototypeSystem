@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace PrototypeSystem {
     public class JsonPrototypeCollection<TPrototypeData> : DictionaryPrototypeCollection<TPrototypeData>
-        where TPrototypeData : BasePrototypeData {
+            where TPrototypeData : IPrototypeData {
         private readonly string _directoryPath;
         private readonly DynamicAssetManager _assets;
 

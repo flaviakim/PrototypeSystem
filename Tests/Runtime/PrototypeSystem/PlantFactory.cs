@@ -3,15 +3,14 @@ using DynamicSaveLoad;
 using UnityEngine;
 
 namespace PrototypeSystem.Tests.PrototypeSystem {
-    public class PlantFactory : InstanceFactory<Plant, PlantData, PlantFactory> {
-        protected override IPrototypeCollection<PlantData> PrototypeCollection { get; } = new JsonPrototypeCollection<PlantData>("Plants", new DynamicAssetManager(Path.GetFullPath("Packages/PrototypeSystem/Tests/Runtime/Assets/")));
-        
-        public Plant CreateInstance(string idName) {
-            if (!PrototypeCollection.TryGetPrototypeForName(idName, out PlantData plantData)) {
-                Debug.LogError($"Couldn't find plant with ID {idName}");
-                return null;
-            }
-            var plant = new Plant(plantData);
+    public class PlantFactory : InstanceFactoryJson<Plant, PlantPrototypeData, IInitializationData> {
+        public PlantFactory(string directoryPath, DynamicAssetManager assets) : base(directoryPath, assets) {
+            
+        }
+
+        public override Plant CreateInstance(PlantPrototypeData prototype, IInitializationData initializationData) {
+            var plant = new Plant();
+            plant.Initialize(prototype, initializationData);
             return plant;
         }
     }
