@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace DynamicSavingLoading {
     public static class DynamicLoader {
@@ -57,9 +59,10 @@ namespace DynamicSavingLoading {
         /// </summary>
         /// <param name="jsonPath"> The relative path to the JSON file, starting from <see cref="DefaultDynamicAssetPath"/>.</param>
         /// <param name="isRelativeToDefaultPath"> If true, the path is considered relative to <see cref="DefaultDynamicAssetPath"/>. If false, the path is treated as an absolute path.</param>
+        /// <param name="result"> An object of type <typeparamref name="T"/> deserialized from the JSON file, or default if the file does not exist or cannot be deserialized. </param>
         /// <typeparam name="T"> The type of the object to be deserialized from the JSON file.</typeparam>
-        /// <returns> An object of type <typeparamref name="T"/> deserialized from the JSON file, or default if the file does not exist or cannot be deserialized.</returns>
-        public static bool TryLoadJson<T>(string jsonPath, bool isRelativeToDefaultPath = true, out T result) {
+        /// <returns> True if it successfully loaded the file, false otherwise.</returns>
+        public static bool TryLoadJson<T>(string jsonPath, bool isRelativeToDefaultPath, out T result) {
             var jsonFullPath = isRelativeToDefaultPath ? Path.Combine(DefaultDynamicAssetPath, jsonPath) : jsonPath;
             if (!File.Exists(jsonFullPath)) {
                 Debug.LogWarning($"JSON file '{jsonFullPath}' does not exist.");

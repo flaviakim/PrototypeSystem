@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using System.IO;
 using DynamicSavingLoading;
-using JetBrains.Annotations;
 using NUnit.Framework;
 
 namespace PrototypeSystem.Tests.DynamicSavingLoading {
@@ -21,23 +21,26 @@ namespace PrototypeSystem.Tests.DynamicSavingLoading {
 
         [Test]
         public void TestLoadSimpleJson()  {
-            var loadedJson = DynamicLoader.LoadJson<TestAsset>(_testAsset1Path);
+            bool success = DynamicLoader.TryLoadJson<TestAsset>(_testAsset1Path, true, out TestAsset loadedJson);
+            Assert.True(success, $"Failed to load JSON file: {_testAsset1Path}");
             Assert.IsNotNull(loadedJson, "Loaded JSON should not be null.");
             Assert.AreEqual("TestAsset1", loadedJson.Name, "Loaded JSON Name should match expected value");
 		}
 
         [Test]
         public void TestLoadSimpleJsonFullPath() {
-            var fullJsonPath = Path.GetFullPath(Path.Combine(BasePath, _testAsset1Path));
+            string fullJsonPath = Path.GetFullPath(Path.Combine(BasePath, _testAsset1Path));
             Assert.IsTrue(File.Exists(fullJsonPath), $"JSON file does not exist at path: {fullJsonPath}");
-            var loadedJson = DynamicLoader.LoadJson<TestAsset>(fullJsonPath, isRelativeToDefaultPath: false);
+            bool success = DynamicLoader.TryLoadJson<TestAsset>(fullJsonPath, isRelativeToDefaultPath: false, out TestAsset loadedJson);
+            Assert.True(success, $"Failed to load JSON file: {fullJsonPath}");
             Assert.IsNotNull(loadedJson, "Loaded JSON should not be null.");
             Assert.AreEqual("TestAsset1", loadedJson.Name, "Loaded JSON Name should match expected value");
         }
         
         [Test]
         public void TestLoadSimpleJsonWithNoOptionalProperty() {
-            var loadedJson = DynamicLoader.LoadJson<TestAsset>(_testAsset1Path);
+            bool success = DynamicLoader.TryLoadJson<TestAsset>(_testAsset1Path, true, out TestAsset loadedJson);
+            Assert.True(success, $"Failed to load JSON file: {_testAsset1Path}");
             Assert.IsNotNull(loadedJson, "Loaded JSON should not be null.");
             Assert.AreEqual("TestAsset1", loadedJson.Name, "Loaded JSON Name should match expected value");
             Assert.IsNull(loadedJson.Description, "Loaded JSON description should be null.");
@@ -45,7 +48,8 @@ namespace PrototypeSystem.Tests.DynamicSavingLoading {
         
         [Test]
         public void TestLoadSimpleJsonWithOptionalProperty() {
-            var loadedJson = DynamicLoader.LoadJson<TestAsset>(_testAsset2Path);
+            bool success = DynamicLoader.TryLoadJson<TestAsset>(_testAsset2Path, true, out TestAsset loadedJson);
+            Assert.True(success, $"Failed to load JSON file: {_testAsset2Path}");
             Assert.IsNotNull(loadedJson, "Loaded JSON should not be null.");
             Assert.AreEqual("TestAsset2", loadedJson.Name, "Loaded JSON Name should match expected value");
             Assert.IsNotNull(loadedJson.Description, "Loaded JSON description should not be null.");
@@ -54,7 +58,7 @@ namespace PrototypeSystem.Tests.DynamicSavingLoading {
         
         [Test]
         public void TestLoadAllJson() {
-            var loadedJsonList = DynamicLoader.LoadAllJson<TestAsset>(TestAssetDirectoryName, recursive: false);
+            IReadOnlyList<TestAsset> loadedJsonList = DynamicLoader.LoadAllJson<TestAsset>(TestAssetDirectoryName, recursive: false);
             Assert.IsNotNull(loadedJsonList, "Loaded JSON list should not be null.");
             Assert.IsNotEmpty(loadedJsonList, "Loaded JSON list should not be empty.");
             Assert.AreEqual(2, loadedJsonList.Count, "Expected to load 2 JSON assets.");
@@ -64,7 +68,7 @@ namespace PrototypeSystem.Tests.DynamicSavingLoading {
         
         [Test]
         public void TestLoadAllJsonRecursive() {
-            var loadedJsonList = DynamicLoader.LoadAllJson<TestAsset>(TestAssetDirectoryName, recursive: true);
+            IReadOnlyList<TestAsset> loadedJsonList = DynamicLoader.LoadAllJson<TestAsset>(TestAssetDirectoryName, recursive: true);
             Assert.IsNotNull(loadedJsonList, "Loaded JSON list should not be null.");
             Assert.IsNotEmpty(loadedJsonList, "Loaded JSON list should not be empty.");
             Assert.AreEqual(3, loadedJsonList.Count, "Expected to load 3 JSON assets including nested ones.");
@@ -75,9 +79,9 @@ namespace PrototypeSystem.Tests.DynamicSavingLoading {
 
         [Test]
         public void TestLoadAllJsonFullPath() {
-            var fullPath = Path.GetFullPath(Path.Combine(BasePath, TestAssetDirectoryName));
+            string fullPath = Path.GetFullPath(Path.Combine(BasePath, TestAssetDirectoryName));
             Assert.IsTrue(Directory.Exists(fullPath), $"Directory does not exist at path: {fullPath}");
-            var loadedJsonList = DynamicLoader.LoadAllJson<TestAsset>(fullPath, recursive: false);
+            IReadOnlyList<TestAsset> loadedJsonList = DynamicLoader.LoadAllJson<TestAsset>(fullPath, recursive: false);
             Assert.IsNotNull(loadedJsonList, "Loaded JSON list should not be null.");
             Assert.IsNotEmpty(loadedJsonList, "Loaded JSON list should not be empty.");
             Assert.AreEqual(2, loadedJsonList.Count, "Expected to load 2 JSON assets.");
@@ -88,9 +92,9 @@ namespace PrototypeSystem.Tests.DynamicSavingLoading {
         
         public class TestAsset {
             public string Name { get; private set; }
-            [CanBeNull] public string Description { get; private set; }
+            public string Description { get; private set; }
 
-            public TestAsset(string name, [CanBeNull] string description) {
+            public TestAsset(string name, string description) {
                 Name = name;
                 Description = description;
             }
