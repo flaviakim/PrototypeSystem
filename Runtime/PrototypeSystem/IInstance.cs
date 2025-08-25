@@ -7,7 +7,7 @@ namespace PrototypeSystem {
     }
 
     public abstract class Instance<TPrototypeData> : IInstance<TPrototypeData> where TPrototypeData : IPrototypeData {
-        public TPrototypeData PrototypeData { get; private set; }
+        public TPrototypeData PrototypeData { get; protected set; }
     }
 
 }
