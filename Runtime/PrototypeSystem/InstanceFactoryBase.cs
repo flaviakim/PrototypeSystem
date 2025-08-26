@@ -10,7 +10,7 @@ namespace PrototypeSystem {
         
         public TInstance CreateInstance(string idName, TInitializationData initializationData) {
             if (!TryGetPrototypeForName(idName, out TPrototypeData prototypeData)) {
-                Debug.LogError($"Couldn't find plant with ID {idName}");
+                Debug.LogError($"Couldn't find instance with ID {idName}");
                 return default;
             }
             Debug.Assert(prototypeData != null, "prototypeData != null");
