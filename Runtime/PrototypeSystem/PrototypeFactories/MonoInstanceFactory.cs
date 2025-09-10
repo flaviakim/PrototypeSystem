@@ -3,7 +3,7 @@ using UnityEngine;
 namespace PrototypeSystem {
     public class MonoInstanceFactory<TInstance, TPrototypeData, TInitializationData> : InstanceFactoryBase<TInstance, TPrototypeData, TInitializationData> 
         where TInstance : MonoInstance<TPrototypeData, TInitializationData>
-        where TPrototypeData : ScriptableObjectPrototypeData
+        where TPrototypeData : IPrototypeData
         where TInitializationData : IInitializationData {
         
         private readonly GameObject _defaultPrefab;

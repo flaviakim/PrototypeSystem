@@ -3,7 +3,7 @@ using UnityEngine;
 namespace PrototypeSystem.ScriptableObjectWrappers {
     public abstract class InstanceFactorySO<TInstance,TPrototypeData, TInitializationData, TInnerFactory> : ScriptableObject, IInstanceFactory<TInstance, TPrototypeData, TInitializationData>
         where TInstance : IInstance<TPrototypeData>
-        where TPrototypeData : ScriptableObjectPrototypeData
+        where TPrototypeData : IPrototypeData
         where TInitializationData : IInitializationData
         where TInnerFactory : IInstanceFactory<TInstance, TPrototypeData, TInitializationData>
     {

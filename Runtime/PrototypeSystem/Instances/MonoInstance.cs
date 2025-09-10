@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace PrototypeSystem {
     public abstract class MonoInstance<TPrototypeData, TInitializationData> : MonoBehaviour, IInstance<TPrototypeData> 
-        where TPrototypeData : ScriptableObjectPrototypeData
+        where TPrototypeData : IPrototypeData
         where TInitializationData : IInitializationData {
         
         public abstract TPrototypeData PrototypeData { get; protected set; }
