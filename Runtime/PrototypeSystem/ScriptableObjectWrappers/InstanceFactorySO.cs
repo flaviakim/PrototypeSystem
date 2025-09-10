@@ -8,12 +8,13 @@ namespace PrototypeSystem.ScriptableObjectWrappers {
         where TInnerFactory : IInstanceFactory<TInstance, TPrototypeData, TInitializationData>
     {
         
+        // [SerializeField] private PrototypeLoadingMethod loadingMethod = PrototypeLoadingMethod.ScriptableObject;
         [SerializeField] private PrototypeLoaderSO<TPrototypeData> prototypeLoader;
         
         private TInnerFactory _innerFactory;
         protected TInnerFactory InnerFactory => _innerFactory ??= CreateInnerFactory();
         
-        protected PrototypeCollection<TPrototypeData> CreatePrototypeCollection() {
+        protected virtual PrototypeCollection<TPrototypeData> CreatePrototypeCollection() {
             var prototypeCollection = new PrototypeCollection<TPrototypeData>(prototypeLoader);
             return prototypeCollection;
         }
