@@ -1,8 +1,8 @@
 using System;
 
 namespace PrototypeSystem.ScriptableObjectWrappers {
-    public abstract class InstanceFactoryBaseSO<TInstance, TPrototypeData, TInitializationData> : InstanceFactorySO<TInstance, TPrototypeData, TInitializationData> where TInstance : IInstance<TPrototypeData> where TPrototypeData : ScriptableObjectPrototypeData where TInitializationData : IInitializationData {
-        protected override IInstanceFactory<TInstance, TPrototypeData, TInitializationData> CreateInnerFactory() {
+    public abstract class InstanceFactoryBaseSO<TInstance, TPrototypeData, TInitializationData> : InstanceFactorySO<TInstance, TPrototypeData, TInitializationData, InstanceFactoryBaseSO<TInstance, TPrototypeData, TInitializationData>.ActionBasedInstanceFactory> where TInstance : IInstance<TPrototypeData> where TPrototypeData : ScriptableObjectPrototypeData where TInitializationData : IInitializationData {
+        protected override ActionBasedInstanceFactory CreateInnerFactory() {
             return new ActionBasedInstanceFactory(CreatePrototypeCollection(), CreateInstance);
         }
 
@@ -12,7 +12,7 @@ namespace PrototypeSystem.ScriptableObjectWrappers {
 
         protected abstract TInstance CreateNewInstance(TPrototypeData prototype, TInitializationData initializationData);
 
-        private class ActionBasedInstanceFactory : InstanceFactoryBase<TInstance, TPrototypeData, TInitializationData> {
+        public class ActionBasedInstanceFactory : InstanceFactoryBase<TInstance, TPrototypeData, TInitializationData> {
             private readonly Func<TPrototypeData, TInitializationData, TInstance> _createInstanceFunc;
 
 

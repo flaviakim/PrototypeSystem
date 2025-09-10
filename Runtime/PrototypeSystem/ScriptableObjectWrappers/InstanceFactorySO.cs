@@ -1,21 +1,23 @@
 using UnityEngine;
 
 namespace PrototypeSystem.ScriptableObjectWrappers {
-    public abstract class InstanceFactorySO<TInstance,TPrototypeData, TInitializationData> : ScriptableObject, IInstanceFactory<TInstance, TPrototypeData, TInitializationData>
+    public abstract class InstanceFactorySO<TInstance,TPrototypeData, TInitializationData, TInnerFactory> : ScriptableObject, IInstanceFactory<TInstance, TPrototypeData, TInitializationData>
         where TInstance : IInstance<TPrototypeData>
         where TPrototypeData : ScriptableObjectPrototypeData
-        where TInitializationData : IInitializationData {
+        where TInitializationData : IInitializationData
+        where TInnerFactory : IInstanceFactory<TInstance, TPrototypeData, TInitializationData>
+    {
         
         [SerializeField] private PrototypeLoaderSO<TPrototypeData> prototypeLoader;
         
-        private IInstanceFactory<TInstance, TPrototypeData, TInitializationData> _innerFactory;
-        private IInstanceFactory<TInstance, TPrototypeData, TInitializationData> InnerFactory => _innerFactory ??= CreateInnerFactory();
+        private TInnerFactory _innerFactory;
+        protected TInnerFactory InnerFactory => _innerFactory ??= CreateInnerFactory();
         
         protected PrototypeCollection<TPrototypeData> CreatePrototypeCollection() {
             var prototypeCollection = new PrototypeCollection<TPrototypeData>(prototypeLoader);
             return prototypeCollection;
         }
-        protected abstract IInstanceFactory<TInstance, TPrototypeData, TInitializationData> CreateInnerFactory();
+        protected abstract TInnerFactory CreateInnerFactory();
 
 
         public virtual TInstance CreateInstance(TPrototypeData prototype, TInitializationData initializationData) {
