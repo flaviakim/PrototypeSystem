@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using PrototypeSystem.PrototypeLoader;
 using UnityEngine;
 
 namespace PrototypeSystem {
@@ -6,10 +7,14 @@ namespace PrototypeSystem {
         where TInstance : IInstance<TPrototypeData> 
         where TPrototypeData : IPrototypeData
         where TInitializationData : IInitializationData {
-        protected abstract IPrototypeCollection<TPrototypeData> PrototypeCollection { get; }
-        
+        protected InstanceFactoryBase(PrototypeCollection<TPrototypeData> prototypeCollection) {
+            PrototypeCollection = prototypeCollection;
+        }
+
+        protected PrototypeCollection<TPrototypeData> PrototypeCollection { get; private set; }
+
         public TInstance CreateInstance(string idName, TInitializationData initializationData) {
-            if (!TryGetPrototypeForName(idName, out TPrototypeData prototypeData)) {
+            if (!PrototypeCollection.TryGetPrototypeForName(idName, out TPrototypeData prototypeData)) {
                 Debug.LogError($"Couldn't find instance with ID {idName}");
                 return default;
             }
@@ -18,22 +23,8 @@ namespace PrototypeSystem {
         }
 
         public abstract TInstance CreateInstance(TPrototypeData prototype, TInitializationData initializationData);
-
-        public bool TryGetPrototypeForName(string idName, out TPrototypeData prototype) {
-            return PrototypeCollection.TryGetPrototypeForName(idName, out prototype);
-        }
-
-        public List<TPrototypeData> GetPrototypes() {
-            return PrototypeCollection.GetPrototypes();
-        }
-
-        public List<string> GetPrototypeNames() {
-            return PrototypeCollection.GetPrototypeNames();
-        }
-
-        public void PreloadPrototypes() {
-            PrototypeCollection.PreloadPrototypes();
-        }
+        
+        // TODO create ease of use Factory with fields to directly set the fields in PrototypeCollection and Loader.
         
     }
 }

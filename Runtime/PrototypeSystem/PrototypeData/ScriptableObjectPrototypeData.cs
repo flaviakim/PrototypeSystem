@@ -2,9 +2,10 @@ using System;
 using UnityEngine;
 
 namespace PrototypeSystem {
-    [CreateAssetMenu(fileName = "New Prototype Data", menuName = "Prototype System/Prototype Data")]
-    public class ScriptableObjectPrototypeData : ScriptableObject, IPrototypeData {
+    // [CreateAssetMenu(fileName = "New Prototype Data", menuName = "Prototype System/Prototype Data")]
+    public abstract class ScriptableObjectPrototypeData : ScriptableObject, IPrototypeData {
         [SerializeField] private string idName;
+        [SerializeField] private string basedOn;
 
         private void OnValidate() {
             if (string.IsNullOrEmpty(idName)) {
@@ -13,5 +14,6 @@ namespace PrototypeSystem {
         }
 
         public string IDName => idName;
+        public string BasedOn => basedOn;
     }
 }
