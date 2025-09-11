@@ -5,7 +5,7 @@ using PrototypeSystem.PrototypeLoader;
 using Debug = UnityEngine.Debug;
 
 namespace PrototypeSystem {
-    public class PrototypeCollection<TPrototypeData> where TPrototypeData : IPrototypeData {
+    public class PrototypeCollection<TPrototypeData> : IPrototypeCollection<TPrototypeData> where TPrototypeData : IPrototypeData {
         private readonly Dictionary<string, TPrototypeData> _prototypes = new(StringComparer.OrdinalIgnoreCase);
         
         private IPrototypeLoader<TPrototypeData> _prototypeLoader;
