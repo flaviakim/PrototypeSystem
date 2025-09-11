@@ -60,7 +60,10 @@ namespace PrototypeSystem.PrototypeLoader {
             if (_mergedJsonCache.TryGetValue(id, out var cached)) return cached;
             if (!_rawJson.TryGetValue(id, out JObject j)) throw new Exception($"Definition '{id}' not found in folder {FullPath}");
             
-            var basedOn = j.Value<string>("basedOn");
+            const string basedOnVariableName = "basedOn"; // case doesn't matter here
+
+            bool hasBasedOn = j.TryGetValue(basedOnVariableName, StringComparison.OrdinalIgnoreCase, out JToken basedOnToken);
+            string basedOn = hasBasedOn ? basedOnToken.ToString() : null;
             JObject merged;
             if (!string.IsNullOrEmpty(basedOn)) {
                 if (!_rawJson.ContainsKey(basedOn))
