@@ -11,6 +11,10 @@ namespace PrototypeSystem.PrototypeLoader {
         private readonly Dictionary<string, JObject> _mergedJsonCache = new(StringComparer.OrdinalIgnoreCase);
 
         public JSonPrototypeLoader(string relativeFolder, string rootFolder = null) : base(relativeFolder, rootFolder) { }
+        
+        public static IPrototypeCollection<TPrototypeData> CreatePrototypeCollection(string relativeFolder, string rootFolder = null) {
+            return new PrototypeCollection<TPrototypeData>(new JSonPrototypeLoader<TPrototypeData>(relativeFolder, rootFolder));
+        }
 
         public override Dictionary<string, TPrototypeData> LoadAll() {
             _rawJson.Clear();

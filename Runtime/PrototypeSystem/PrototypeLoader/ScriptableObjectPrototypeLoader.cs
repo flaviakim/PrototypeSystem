@@ -10,6 +10,10 @@ namespace PrototypeSystem.PrototypeLoader {
             _rootFolder = rootFolder;
         }
         
+        public static IPrototypeCollection<TPrototypeData> CreatePrototypeCollection(string relativeFolder, string rootFolder = null) {
+            return new PrototypeCollection<TPrototypeData>(new ScriptableObjectPrototypeLoader<TPrototypeData>(rootFolder));
+        }
+        
         public Dictionary<string, TPrototypeData> LoadAll() {
             var prototypeDatas = new Dictionary<string, TPrototypeData>();
             GUID[] assetGUIDs = AssetDatabase.FindAssetGUIDs($"t:{typeof(TPrototypeData).Name}", new[] {_rootFolder});
