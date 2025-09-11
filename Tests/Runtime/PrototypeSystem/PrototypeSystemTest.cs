@@ -1,97 +1,38 @@
-// using System.IO;
-// using DynamicSaveLoad;
-// using NUnit.Framework;
-// using Tests.Runtime.PrototypeSystem;
-// using UnityEngine;
-//
-//
-// namespace PrototypeSystem.Tests.PrototypeSystem {
-//     
-//     public class TilePrototypeData : IPrototypeData {
-//         public TilePrototypeData(string idName, string basedOn) {
-//             IDName = idName;
-//             BasedOn = basedOn;
-//         }
-//
-//         public string IDName { get; }
-//         public string BasedOn { get; }
-//         
-//     }
-//
-//     public class Tile : IInstance<TilePrototypeData> {
-//         public Tile(TilePrototypeData prototypeData) {
-//             PrototypeData = prototypeData;
-//         }
-//
-//         public TilePrototypeData PrototypeData { get; }
-//     }
-//     
-//     [TestFixture]
-//     public class PrototypeSystemTest {
-//
-//         [Test]
-//         public void TestSimpleCreation() {
-//             var tileFactory = new PrototypeFactory<Tile, TileInitializationData>();
-//         }
-//         
-//     }
-//
-//
-// //         // const string TestAssetDirectoryName = "Plants";
-// //         // const string BasePath = "Packages/PrototypeSystem/Tests/Runtime/Assets/";
-// //         // private readonly string _plant1Path = Path.Combine(TestAssetDirectoryName, "plant1.json");
-// //         // private readonly string _plant2Path = Path.Combine(TestAssetDirectoryName, "plant2.json");
-// //         // private const string Plant1IDName = "plant1";
-// //         // private const string Plant1Name = "Plant 1";
-// //         // private const string Plant1Description = "A beautiful plant.";
-// //         // private const string Plant2IDName = "plant2";
-// //         // private const string Plant2Name = "Plant 2";
-// //         // private const string Plant2Description = "A useful plant.";
-// //
-// //
-// //         [Test]
-// //         public void TestSimpleCreation() {
-// //             
-// //         }
-// //         
-// //         
-// //         [Test]
-// //         public void TestCreatingAPlant() {
-// //             // var plantFactory = new PlantFactory();
-// //             //
-// //             // var plant = plantFactory.CreateInstance(Plant1IDName, IInitializationData.Empty);
-// //             // Assert.IsNotNull(plant, "Plant should not be null.");
-// //             // Assert.IsNotNull(plant.PrototypeData, "Plant data should not be null.");
-// //             // Assert.IsNotNull(plant.PrototypeData.IDName, "Plant id name should not be null.");
-// //             // Assert.IsNotNull(plant.PrototypeData.IDName, "Plant PrototypeData.IDName name should not return null.");
-// //             // Assert.AreEqual(Plant1IDName, plant.PrototypeData.IDName, "Plant IDName should match expected value.");
-// //             // Assert.AreEqual(plant.PrototypeData.IDName, plant.PrototypeData.IDName, "Plant Data IDName should match plant IDName.");
-// //             // Assert.AreEqual(Plant1Name, plant.PrototypeData.Name, "Plant Name should match expected value.");
-// //             // Assert.AreEqual(Plant1Description, plant.PrototypeData.Description, "Plant Description should match expected value.");
-// //             // var plant2 = plantFactory.CreateInstance(Plant2IDName, IInitializationData.Empty);
-// //             // Assert.IsNotNull(plant2, "Plant data should not be null.");
-// //             // Assert.AreEqual(Plant2IDName, plant2.PrototypeData.IDName, "Plant IDName should match expected value.");
-// //             // Assert.AreEqual(plant2.PrototypeData.IDName, plant2.PrototypeData.IDName, "Plant Data IDName should match plant IDName.");
-// //             // Assert.AreEqual(Plant2Name, plant2.PrototypeData.Name, "Plant Name should match expected value.");
-// //             // Assert.AreEqual(Plant2Description, plant2.PrototypeData.Description, "Plant Description should match expected value.");
-// //         }
-// //
-// //         [Test]
-// //         public void TestCreatingAnInstanceWithSerializedObject() {
-// //             // // var buildingFactory = new BuildingFactory();
-// //             // var buildingFactory = new MonoInstanceFactory<Building, BuildingPrototypeData, BuildingInitializationData>();
-// //             // Building hut = buildingFactory.CreateInstance("hut", new BuildingInitializationData(Vector2Int.one));
-// //             // Assert.IsNotNull(hut, "Building should not be null.");
-// //             // Assert.IsNotNull(hut.PrototypeData, "Building data should not be null.");
-// //             // Assert.AreEqual("hut", hut.PrototypeData.IDName, "Building IDName should match expected value.");
-// //             // Assert.AreEqual(1, hut.PrototypeData.Floors, "Hut should have 1 floor.");
-// //             // Assert.AreEqual(Vector2Int.one, hut.Position, "Hut position should match set value via initialization.");
-// //             // Building villa = buildingFactory.CreateInstance("villa", new BuildingInitializationData(Vector2Int.one));
-// //             // Assert.IsNotNull(villa, "Building should not be null.");
-// //             // Assert.IsNotNull(villa.PrototypeData, "Building data should not be null.");
-// //             // Assert.AreEqual("villa", villa.PrototypeData.IDName, "Building IDName should match expected value.");
-// //             // Assert.AreEqual(3, villa.PrototypeData.Floors, "Villa should have 3 floors.");
-// //             // Assert.AreEqual(Vector2Int.one, villa.Position, "Villa Position should match expected value.");
-// //         }
-// //     }
-// }
+using System.IO;
+using NUnit.Framework;
+using PrototypeSystem.PrototypeLoader;
+using PrototypeSystem.Tests.PrototypeSystem.TileExample;
+using UnityEngine;
+
+namespace PrototypeSystem.Tests.PrototypeSystem {
+    [TestFixture]
+    public class PrototypeSystemTest {
+        private static readonly string BasePath =
+            Path.Combine("Packages", "PrototypeSystem", "Tests", "Runtime", "Assets");
+
+        private static readonly string TilesRelativePath = Path.Combine("TileExample", "Tiles");
+
+        [Test]
+        public void TestSimpleCreationWorkflow() {
+            const string idName = "grass";
+            var initialPosition = new Vector2Int(1, 2);
+            const int grassTileMovementCost = 2;
+            var prototypeLoader = new JSonPrototypeLoader<TilePrototypeData>(TilesRelativePath, BasePath);
+            var prototypeCollection = new PrototypeCollection<TilePrototypeData>(prototypeLoader);
+            prototypeCollection.Initialize();
+            var tileFactory = new InstanceFactoryMonoBehaviour<Tile, TilePrototypeData, TileInstanceData>(prototypeCollection);
+
+            Tile tile = tileFactory.CreateInstance(idName, new TileInstanceData(initialPosition));
+
+            Assert.IsNotNull(tile, "Tile should not be null.");
+            Assert.IsNotNull(tile.PrototypeData, "Tile prototype data should not be null.");
+            Assert.IsNotNull(tile.InstanceData, "Tile prototype data should not be null.");
+            Assert.AreEqual(idName, tile.PrototypeData.IDName);
+            Assert.AreEqual(initialPosition, tile.InstanceData.Position);
+            Assert.AreEqual(initialPosition, tile.Position);
+            Assert.AreEqual(grassTileMovementCost, tile.PrototypeData.MovementCost);
+            Assert.AreEqual(grassTileMovementCost, tile.MovementCost);
+        }
+    }
+
+}

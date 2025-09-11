@@ -7,10 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.2.1]
 
+### Changed
+
  - Leave IInstance implementations the freedom of how to initialize everything.
  - Decouple IInstance from IInitializationData.
 
 ## [0.2.0]
+
+### Changed
 
  - Extensive refactoring, breaking most things.
  - Added InitializationData to easily create new IInstance objects in IInstanceFactory's.
@@ -20,9 +24,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.1]
 
+### Added
+
  - Add public PrototypeData reference to IInstance interface.
 
 ## [0.1.0]
+
+### Added
 
  - Reformatting of codebase according to Unity Package Manager guidelines.
  - Initial release of the project.

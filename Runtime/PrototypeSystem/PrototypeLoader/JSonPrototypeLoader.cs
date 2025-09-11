@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
@@ -20,13 +21,19 @@ namespace PrototypeSystem.PrototypeLoader {
                 Debug.LogWarning($"DataLoader: folder not found: {fullPath}");
                 return new Dictionary<string, TData>();
             }
+
+            const string idVariableName = "IDName"; // case doesn't matter here
             
             foreach (string file in Directory.GetFiles(fullPath, "*.json", SearchOption.AllDirectories)) {
                 try {
                     string text = File.ReadAllText(file);
                     JObject j = JObject.Parse(text);
-                    string id = j.Value<string>("id") ?? Path.GetFileNameWithoutExtension(file);
-                    j["id"] = id;
+                    bool hasID = j.TryGetValue(idVariableName, StringComparison.OrdinalIgnoreCase, out JToken idToken); // use TryGetValue to allow ignoring case.
+                    string id = hasID ? idToken.ToString() : Path.GetFileNameWithoutExtension(file);
+                    
+                    if (!hasID) Debug.LogWarning($"{file} does not have a property {idVariableName}! Using file name as id: {id}");
+
+                    j[idVariableName] = id;
                     _rawJson[id] = j;
                 } catch (Exception ex) {
                     Debug.LogError($"DataLoader: failed to parse {file}: {ex}");
@@ -43,6 +50,8 @@ namespace PrototypeSystem.PrototypeLoader {
                     Debug.LogError($"DataLoader: failed to resolve {id}: {ex}");
                 }
             }
+
+            Debug.Log($"Loaded {resolved.Count} prototypes of type {typeof(TData).Name}: {string.Join(", ", resolved.Keys)}");
             
             return resolved;
         }
