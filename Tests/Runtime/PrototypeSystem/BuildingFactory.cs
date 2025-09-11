@@ -5,6 +5,9 @@ using UnityEngine.Serialization;
 
 namespace PrototypeSystem.Tests.PrototypeSystem {
     
-    public class BuildingFactory : MonoInstanceFactory<Building, BuildingPrototypeData, BuildingInitializationData> { }
+    public class BuildingFactory : MonoInstanceFactory<Building, BuildingPrototypeData, BuildingInitializationData> {
+        public BuildingFactory(PrototypeCollection<BuildingPrototypeData> prototypeCollection, GameObject defaultPrefab) : base(prototypeCollection, defaultPrefab) {
+        }
+    }
     
 }

@@ -3,9 +3,8 @@ using DynamicSaveLoad;
 using UnityEngine;
 
 namespace PrototypeSystem.Tests.PrototypeSystem {
-    public class PlantFactory : InstanceFactoryJson<Plant, PlantPrototypeData, IInitializationData.EmptyInitializationData> {
-        public PlantFactory(string directoryPath, DynamicAssetManager assets) : base(directoryPath, assets) {
-            
+    public class PlantFactory : InstanceFactoryBase<Plant, PlantPrototypeData, IInitializationData.EmptyInitializationData> {
+        public PlantFactory(PrototypeCollection<PlantPrototypeData> prototypeCollection) : base(prototypeCollection) {
         }
 
         public override Plant CreateInstance(PlantPrototypeData prototype, IInitializationData.EmptyInitializationData initializationData) {

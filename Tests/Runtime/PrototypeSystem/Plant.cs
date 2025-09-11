@@ -11,7 +11,7 @@ namespace PrototypeSystem.Tests.PrototypeSystem {
     }
     
     public class PlantPrototypeData : BasePrototypeData {
-        public PlantPrototypeData(string idName, string name, string description) : base(idName) {
+        public PlantPrototypeData(string idName, string name, string description) : base(idName, null) {
             Name = name;
             Description = description;
         }

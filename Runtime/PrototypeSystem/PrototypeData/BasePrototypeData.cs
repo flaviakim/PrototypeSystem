@@ -6,7 +6,7 @@ namespace PrototypeSystem {
         public string IDName { get; }
         public string BasedOn { get; }
 
-        protected BasePrototypeData(string idName, string basedOn) {
+        protected BasePrototypeData(string idName, string basedOn = null) {
             IDName = idName;
             BasedOn = basedOn;
         }
