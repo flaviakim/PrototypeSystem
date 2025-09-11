@@ -5,7 +5,9 @@ namespace PrototypeSystem.Tests.PrototypeSystem.TileExample {
         
         public Vector2Int Position => InstanceData.Position;
         public int MovementCost => PrototypeData.MovementCost;
-        
+        public int Defense => PrototypeData.Defense;
+        public string IDName => PrototypeData.IDName;
+
         public TilePrototypeData PrototypeData { get; private set; }
         public TileInstanceData InstanceData { get; private set; }
 

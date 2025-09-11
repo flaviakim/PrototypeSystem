@@ -1,4 +1,5 @@
 {
   "idName": "grass",
-  "MovementCost": 2
+  "MovementCost": 2,
+  "Defense": 1
 }
