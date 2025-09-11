@@ -6,20 +6,20 @@ using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 namespace PrototypeSystem.PrototypeLoader {
-    public class JSonPrototypeLoader<TData> : FilePrototypeLoader<TData> where TData : IPrototypeData {
+    public class JSonPrototypeLoader<TPrototypeData> : FilePrototypeLoader<TPrototypeData> where TPrototypeData : IPrototypeData {
         private readonly Dictionary<string, JObject> _rawJson = new(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, JObject> _mergedJsonCache = new(StringComparer.OrdinalIgnoreCase);
 
         public JSonPrototypeLoader(string relativeFolder, string rootFolder = null) : base(relativeFolder, rootFolder) { }
 
-        public override Dictionary<string, TData> LoadAll() {
+        public override Dictionary<string, TPrototypeData> LoadAll() {
             _rawJson.Clear();
             _mergedJsonCache.Clear();
 
             string fullPath = FullPath;
             if (!Directory.Exists(fullPath)) {
                 Debug.LogWarning($"DataLoader: folder not found: {fullPath}");
-                return new Dictionary<string, TData>();
+                return new Dictionary<string, TPrototypeData>();
             }
 
             const string idVariableName = "IDName"; // case doesn't matter here
@@ -40,18 +40,18 @@ namespace PrototypeSystem.PrototypeLoader {
                 }
             }
 
-            var resolved = new Dictionary<string, TData>(StringComparer.OrdinalIgnoreCase);
+            var resolved = new Dictionary<string, TPrototypeData>(StringComparer.OrdinalIgnoreCase);
             foreach (string id in _rawJson.Keys) {
                 try {
                     var merged = GetMergedJObject(id);
-                    var obj = merged.ToObject<TData>();
+                    var obj = merged.ToObject<TPrototypeData>();
                     if (obj != null) resolved[id] = obj;
                 } catch (Exception ex) {
                     Debug.LogError($"DataLoader: failed to resolve {id}: {ex}");
                 }
             }
 
-            Debug.Log($"Loaded {resolved.Count} prototypes of type {typeof(TData).Name}: {string.Join(", ", resolved.Keys)}");
+            Debug.Log($"Loaded {resolved.Count} prototypes of type {typeof(TPrototypeData).Name}: {string.Join(", ", resolved.Keys)}");
             
             return resolved;
         }
