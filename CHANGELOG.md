@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0]
+
+### Changed
+
+ - Complete refactor of the prototype system to make usage much simpler. 
+ - No need to create custom factories
+ - Instances get InstanceData instead of InitializationData
+ - More interface based, removed many unnecessary abstract classes.
+
 ## [0.2.1]
 
 ### Changed
