@@ -9,11 +9,13 @@ namespace PrototypeSystem {
         where TInstanceData : IInstanceData {
         public IPrototypeCollection<TPrototypeData> PrototypeCollection { get; set; }
 
-        private readonly Func<TInstance> _newInstanceCreator;
+        private readonly Func<TPrototypeData, TInstanceData, TInstance> _newInstanceCreator;
+        private readonly Action<TInstance, TPrototypeData, TInstanceData> _newInstanceInitializer;
 
-        public InstanceFactory(IPrototypeCollection<TPrototypeData> prototypeCollection, Func<TInstance> newInstanceCreator) { 
+        public InstanceFactory(IPrototypeCollection<TPrototypeData> prototypeCollection, Func<TPrototypeData, TInstanceData, TInstance> newInstanceCreator, Action<TInstance, TPrototypeData, TInstanceData> newInstanceInitializer = null) { 
             PrototypeCollection = prototypeCollection;
             _newInstanceCreator = newInstanceCreator;
+            _newInstanceInitializer = newInstanceInitializer;
         }
 
         public TInstance CreateInstance(string idName, TInstanceData instanceData) {
@@ -22,8 +24,8 @@ namespace PrototypeSystem {
                 return default;
             }
 
-            TInstance instance = _newInstanceCreator.Invoke();
-            instance.Initialize(prototypeData, instanceData);
+            TInstance instance = _newInstanceCreator.Invoke(prototypeData, instanceData);
+            _newInstanceInitializer?.Invoke(instance, prototypeData, instanceData);
             return instance;
         }
     }
