@@ -1,14 +1,14 @@
 using System.IO;
 using NUnit.Framework;
-using PrototypeSystem.PrototypeLoader;
-using PrototypeSystem.Tests.PrototypeSystem.TileExample;
+using TypeObjectSystem.PrototypeLoader;
+using TypeObjectSystem.Tests.TypeObjectSystem.TileExample;
 using UnityEngine;
 
-namespace PrototypeSystem.Tests.PrototypeSystem {
+namespace TypeObjectSystem.Tests.TypeObjectSystem {
     [TestFixture]
-    public class PrototypeSystemTest {
+    public class TypeObjectSystemTest {
         private static readonly string BasePath =
-            Path.Combine("Packages", "PrototypeSystem", "Tests", "Runtime", "Assets");
+            Path.Combine("Packages", "TypeObjectSystem", "Tests", "Runtime", "Assets");
 
         private static readonly string TilesRelativePath = Path.Combine("TileExample", "Tiles");
 

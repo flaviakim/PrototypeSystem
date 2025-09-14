@@ -1,17 +1,23 @@
 {
-    "name": "com.flaviakim.prototypesystem",
+    "name": "com.flaviakim.typeobjectsystem",
     "version": "0.3.0",
     "unity": "6000.0",
-    "description": "A simple, reusable, easy to use prototype system for Unity to easily load dynamic content from files.",
-    "displayName": "PrototypeSystem",
+    "description": "A simple, reusable, easy to use type object system for Unity to easily load dynamic types from files.",
+    "displayName": "Type Object System",
     "author": {
         "name": "Flavia Brogle"
     },
     "keywords": [
+        "Type Object System",
+        "Type",
+        "Object",
+        "Type Object",
         "Prototype System",
         "Design Patterns",
         "Modding",
-        "Moddable"
+        "Moddable",
+        "Loading",
+        "File"
     ],
     "documentationUrl": "https://github.com/flaviakim/PrototypeSystem/blob/main/README.md",
     "dependencies": {

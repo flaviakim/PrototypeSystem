@@ -1,5 +1,5 @@
 {
   "IDName": "swamp",
   "movementCost": 4,
-  "basedon": "grass"
+  "parent": "grass"
 }

@@ -5,7 +5,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace PrototypeSystem.ComponentLoader {
+namespace TypeObjectSystem.ComponentLoaders {
     // TODO improve with SpriteLoader(Async) in old DynamicSaveLoad
     public static class SpriteLoader {
         private static readonly Dictionary<string, Sprite> Cache = new(StringComparer.OrdinalIgnoreCase);

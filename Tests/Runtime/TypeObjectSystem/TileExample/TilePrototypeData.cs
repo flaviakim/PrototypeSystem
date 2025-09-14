@@ -1,4 +1,4 @@
-namespace PrototypeSystem.Tests.PrototypeSystem.TileExample {
+namespace TypeObjectSystem.Tests.TypeObjectSystem.TileExample {
     public class TilePrototypeData : IPrototypeData {
         public TilePrototypeData(string idName, string basedOn, int movementCost, int defense) {
             IDName = idName;

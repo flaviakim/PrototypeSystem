@@ -5,25 +5,25 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-namespace PrototypeSystem.PrototypeLoader {
-    public class JSonPrototypeLoader<TPrototypeData> : FilePrototypeLoader<TPrototypeData> where TPrototypeData : IPrototypeData {
+namespace TypeObjectSystem.TypeLoader {
+    public class JSonTypeLoader<TType> : FileTypeLoader<TType> where TType : IType {
         private readonly Dictionary<string, JObject> _rawJson = new(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, JObject> _mergedJsonCache = new(StringComparer.OrdinalIgnoreCase);
 
-        public JSonPrototypeLoader(string relativeFolder, string rootFolder = null) : base(relativeFolder, rootFolder) { }
+        public JSonTypeLoader(string relativeFolder, string rootFolder = null) : base(relativeFolder, rootFolder) { }
         
-        public static IPrototypeCollection<TPrototypeData> CreatePrototypeCollection(string relativeFolder, string rootFolder = null) {
-            return new PrototypeCollection<TPrototypeData>(new JSonPrototypeLoader<TPrototypeData>(relativeFolder, rootFolder));
+        public static ITypeCollection<TType> CreateTypeCollection(string relativeFolder, string rootFolder = null) {
+            return new TypeCollection<TType>(new JSonTypeLoader<TType>(relativeFolder, rootFolder));
         }
 
-        public override Dictionary<string, TPrototypeData> LoadAll() {
+        public override Dictionary<string, TType> LoadAll() {
             _rawJson.Clear();
             _mergedJsonCache.Clear();
 
             string fullPath = FullPath;
             if (!Directory.Exists(fullPath)) {
                 Debug.LogWarning($"DataLoader: folder not found: {fullPath}");
-                return new Dictionary<string, TPrototypeData>();
+                return new Dictionary<string, TType>();
             }
 
             const string idVariableName = "IDName"; // case doesn't matter here
@@ -44,18 +44,18 @@ namespace PrototypeSystem.PrototypeLoader {
                 }
             }
 
-            var resolved = new Dictionary<string, TPrototypeData>(StringComparer.OrdinalIgnoreCase);
+            var resolved = new Dictionary<string, TType>(StringComparer.OrdinalIgnoreCase);
             foreach (string id in _rawJson.Keys) {
                 try {
                     var merged = GetMergedJObject(id);
-                    var obj = merged.ToObject<TPrototypeData>(); // If TPrototypeData is also a ScriptableObject, this produces a warning. But it should be fine to use its constructor.
+                    var obj = merged.ToObject<TType>(); // If TType is also a ScriptableObject, this produces a warning. But it should be fine to use its constructor.
                     if (obj != null) resolved[id] = obj;
                 } catch (Exception ex) {
                     Debug.LogError($"DataLoader: failed to resolve {id}: {ex}");
                 }
             }
 
-            Debug.Log($"Loaded {resolved.Count} prototypes of type {typeof(TPrototypeData).Name}: {string.Join(", ", resolved.Keys)}");
+            Debug.Log($"Loaded {resolved.Count} types of {typeof(TType).Name}: {string.Join(", ", resolved.Keys)}");
             
             return resolved;
         }

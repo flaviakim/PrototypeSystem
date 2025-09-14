@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PrototypeSystem.Tests.PrototypeSystem.TileExample {
+namespace TypeObjectSystem.Tests.TypeObjectSystem.TileExample {
     public class Tile : MonoBehaviour, IInstance<TilePrototypeData, TileInstanceData> {
         
         public Vector2Int Position => InstanceData.Position;
