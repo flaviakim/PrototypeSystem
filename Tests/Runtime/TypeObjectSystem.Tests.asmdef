@@ -1,7 +1,7 @@
 {
-  "name": "PrototypeSystem.Tests",
+  "name": "TypeObjectSystem.Tests",
   "references": [
-    "com.flaviakim.PrototypeSystem"
+    "com.flaviakim.TypeObjectSystem"
   ],
   "optionalUnityReferences": [
     "TestAssemblies"

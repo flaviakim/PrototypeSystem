@@ -1,7 +1,7 @@
-using PrototypeSystem.PrototypeLoader;
+using TypeObjectSystem.PrototypeLoader;
 using UnityEngine;
 
-namespace PrototypeSystem.Tests.PrototypeSystem.TileExample {
+namespace TypeObjectSystem.Tests.TypeObjectSystem.TileExample {
     public class Map : MonoBehaviour {
         private void Start() {
             var tileFactory = new InstanceFactoryMonoBehaviour<Tile, TilePrototypeData, TileInstanceData>(new PrototypeCollection<TilePrototypeData>(new JSonPrototypeLoader<TilePrototypeData>(Application.streamingAssetsPath)));

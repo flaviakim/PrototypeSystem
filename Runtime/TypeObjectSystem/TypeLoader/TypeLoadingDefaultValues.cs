@@ -1,7 +1,7 @@
 using UnityEngine;
 
-namespace PrototypeSystem.PrototypeLoader {
-    public static class PrototypeLoadingDefaultValues {
+namespace TypeObjectSystem.TypeLoader {
+    public static class TypeLoadingDefaultValues {
         public static string RootFolder { get; set; } = Application.streamingAssetsPath;
     }
 }

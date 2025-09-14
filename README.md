@@ -1,6 +1,9 @@
-# Prototype System
+# Type Object System
 
-A Prototype System to easily load dynamic content from files.
+A generic version of the Type Object System to easily load dynamic types from files.
+
+The idea of the pattern is based on the Chapter [Type Object](https://gameprogrammingpatterns.com/type-object.html) 
+from the amazing [Game Programming Patterns](https://gameprogrammingpatterns.com/) book.
 
 [//]: # (## Overview)
 
@@ -11,16 +14,17 @@ Follow the instructions in the [Unity documentation to install a package from a 
 ## Workflows
 
 ### 1. Create an Instance Class 
-IInstance<IPrototypeData> is the class to create instances of, based on the prototype data.
+IInstance<IType> is the class to create instances of, based on the type data.
 
 Make your desired class inherit from this interface or the provided base classes like Instance or MonoInstance (useful with ScriptableObjectPrototypeData).
 
-### 2. Create a PrototypeData Class
-IPrototypeData contains all the data, which stays the same for all instances from a given prototype.
+### 2. Create a Type Class
+IType contains all the data, which stays the same for all instances from a given type.
 
-This could be max health for Enemy Instances, Size for buildings, etc.
+This could be max health for monsters, size for buildings, etc.
 
-Create an object that inherits from this, or use the provided base classes like BasePrototypeData or ScriptableObjectPrototypeData.
+Create an object that inherits from IType and add properties for all the required data.
+Preferably add a constructor with all the properties as parameters (required for the existing JsonTypeLoader, optional when loading data only from ScriptableObjects or custom sources).
 
 ### 3. Create the Initialization Data Class
 Create a class inheriting from IInitializationData storing all additional data needed to create an instance from a prototype.

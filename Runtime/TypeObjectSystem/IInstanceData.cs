@@ -1,3 +1,3 @@
-namespace PrototypeSystem {
+namespace TypeObjectSystem {
     public interface IInstanceData { }
 }
