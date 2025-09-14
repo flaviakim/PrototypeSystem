@@ -19,9 +19,10 @@ namespace TypeObjectSystem.TypeLoader {
             GUID[] assetGUIDs = string.IsNullOrWhiteSpace(_rootFolder) ? AssetDatabase.FindAssetGUIDs($"t:{typeof(TType).Name}",new []{"Assets"}) : AssetDatabase.FindAssetGUIDs($"t:{typeof(TType).Name}", new[] {_rootFolder});
             Debug.Log($"Found {assetGUIDs.Length} assets of type {typeof(TType).Name}");
             foreach (GUID assetGUID in assetGUIDs) {
-                var scripatbleObjectTypeData = AssetDatabase.LoadAssetAtPath<TType>(AssetDatabase.GUIDToAssetPath(assetGUID));
-                if (string.IsNullOrWhiteSpace(scripatbleObjectTypeData.IDName)) Debug.LogError($"Scriptable Object of type {typeof(TType).Name} at {AssetDatabase.GUIDToAssetPath(assetGUID)} with assetGUID {assetGUID} has no IDName set.");
-                typeDatas.Add(scripatbleObjectTypeData.IDName, scripatbleObjectTypeData);
+                var scriptableObjectTypeData = AssetDatabase.LoadAssetAtPath<TType>(AssetDatabase.GUIDToAssetPath(assetGUID));
+                if (string.IsNullOrWhiteSpace(scriptableObjectTypeData.IDName)) Debug.LogError($"Scriptable Object of type {typeof(TType).Name} at {AssetDatabase.GUIDToAssetPath(assetGUID)} with assetGUID {assetGUID} has no IDName set.");
+                typeDatas.Add(scriptableObjectTypeData.IDName, scriptableObjectTypeData);
+                // TODO is there a way to use parents in ScriptableObjects?
             }
 
             return typeDatas;

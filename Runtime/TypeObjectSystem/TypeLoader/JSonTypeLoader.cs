@@ -64,9 +64,9 @@ namespace TypeObjectSystem.TypeLoader {
             if (_mergedJsonCache.TryGetValue(id, out var cached)) return cached;
             if (!_rawJson.TryGetValue(id, out JObject j)) throw new Exception($"Definition '{id}' not found in folder {FullPath}");
             
-            const string basedOnVariableName = "basedOn"; // case doesn't matter here
+            string parentVariableName = "Parent"; // case doesn't matter here
 
-            bool hasBasedOn = j.TryGetValue(basedOnVariableName, StringComparison.OrdinalIgnoreCase, out JToken basedOnToken);
+            bool hasBasedOn = j.TryGetValue(parentVariableName, StringComparison.OrdinalIgnoreCase, out JToken basedOnToken);
             string basedOn = hasBasedOn ? basedOnToken.ToString() : null;
             JObject merged;
             if (!string.IsNullOrEmpty(basedOn)) {
