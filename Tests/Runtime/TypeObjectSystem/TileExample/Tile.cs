@@ -1,18 +1,18 @@
 using UnityEngine;
 
 namespace TypeObjectSystem.Tests.TypeObjectSystem.TileExample {
-    public class Tile : MonoBehaviour, IInstance<TilePrototypeData, TileInstanceData> {
+    public class Tile : MonoBehaviour, IInstance<TileType, TileInstanceData> {
         
         public Vector2Int Position => InstanceData.Position;
-        public int MovementCost => PrototypeData.MovementCost;
-        public int Defense => PrototypeData.Defense;
-        public string IDName => PrototypeData.IDName;
+        public int MovementCost => Type.MovementCost;
+        public int Defense => Type.Defense;
+        public string IDName => Type.IDName;
 
-        public TilePrototypeData PrototypeData { get; private set; }
+        public TileType Type { get; private set; }
         public TileInstanceData InstanceData { get; private set; }
 
-        public void Initialize(TilePrototypeData prototypeData, TileInstanceData instanceData) {
-            PrototypeData = prototypeData;
+        public void Initialize(TileType type, TileInstanceData instanceData) {
+            Type = type;
             InstanceData = instanceData;
         }
     }

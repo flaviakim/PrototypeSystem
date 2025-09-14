@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TypeObjectSystem.TypeLoader;
 using UnityEngine;
 
 namespace TypeObjectSystem {
@@ -7,7 +8,6 @@ namespace TypeObjectSystem {
         private readonly Dictionary<string, TType> _types = new(StringComparer.OrdinalIgnoreCase);
         
         protected abstract List<TType> GetDebugTypes();
-        
 
         public bool TryGetTypeForName(string idName, out TType type) {
             return _types.TryGetValue(idName, out type);
@@ -21,8 +21,10 @@ namespace TypeObjectSystem {
             return _types.Values;
         }
 
-        public void PreloadAll() {
-            _types.Clear();
+        public void LoadTypes(bool clearExisting = true, params ITypeLoader<TType>[] typeLoaders) {
+            if (typeLoaders == null) {
+                _types.Clear();
+            }
             foreach (TType type in GetDebugTypes()) {
                 _types.Add(type.IDName, type);
             }
