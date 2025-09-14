@@ -48,7 +48,7 @@ namespace PrototypeSystem.PrototypeLoader {
             foreach (string id in _rawJson.Keys) {
                 try {
                     var merged = GetMergedJObject(id);
-                    var obj = merged.ToObject<TPrototypeData>();
+                    var obj = merged.ToObject<TPrototypeData>(); // If TPrototypeData is also a ScriptableObject, this produces a warning. But it should be fine to use its constructor.
                     if (obj != null) resolved[id] = obj;
                 } catch (Exception ex) {
                     Debug.LogError($"DataLoader: failed to resolve {id}: {ex}");
