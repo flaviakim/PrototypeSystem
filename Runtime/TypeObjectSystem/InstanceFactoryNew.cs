@@ -10,7 +10,7 @@ namespace TypeObjectSystem {
             return new TInstance();
         }
 
-        public InstanceFactoryNew(ITypeCollection<TType> typeCollection, Action<TInstance, TType, TInstanceData> newInstanceInitializer = null) : base(typeCollection, NewInstanceCreator, newInstanceInitializer) {
+        public InstanceFactoryNew(ITypeCollection<TType> typeCollection, Action<TInstance, TType, TInstanceData> newInstanceInitializer) : base(typeCollection, NewInstanceCreator, newInstanceInitializer) {
         }
     }
 }
