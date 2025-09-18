@@ -1,7 +1,9 @@
 {
   "name": "TypeObjectSystem.Tests",
   "references": [
-    "com.flaviakim.TypeObjectSystem"
+    "UnityEngine.TestRunner",
+    "UnityEditor.TestRunner",
+    "FlaviaKim.TypeObjectSystem"
   ],
   "optionalUnityReferences": [
     "TestAssemblies"

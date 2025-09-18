@@ -1,5 +1,5 @@
 {
-    "name": "com.flaviakim.typeobjectsystem",
+    "name": "ch.flaviakim.typeobjectsystem",
     "version": "0.3.0",
     "unity": "6000.0",
     "description": "A simple, reusable, easy to use type object system for Unity to easily load dynamic types from files.",
