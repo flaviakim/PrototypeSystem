@@ -1,8 +1,6 @@
 {
-  "name": "TypeObjectSystem.Tests",
+  "name": "FlaviaKim.TypeObjectSystem.Tests",
   "references": [
-    "UnityEngine.TestRunner",
-    "UnityEditor.TestRunner",
     "FlaviaKim.TypeObjectSystem"
   ],
   "optionalUnityReferences": [
