@@ -1,14 +1,14 @@
 namespace TypeObjectSystem.Tests.TypeObjectSystem.TileExample {
-    public class TilePrototypeData : IPrototypeData {
-        public TilePrototypeData(string idName, string basedOn, int movementCost, int defense) {
+    public class TileType : IType {
+        public TileType(string idName, string parent, int movementCost, int defense) {
             IDName = idName;
-            BasedOn = basedOn;
+            Parent = parent;
             MovementCost = movementCost;
             Defense = defense;
         }
 
         public string IDName { get; }
-        public string BasedOn { get; }
+        public string Parent { get; }
         public int MovementCost { get; }
         public int Defense { get; }
     }

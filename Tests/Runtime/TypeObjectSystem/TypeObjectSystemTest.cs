@@ -1,6 +1,6 @@
 using System.IO;
 using NUnit.Framework;
-using TypeObjectSystem.PrototypeLoader;
+using TypeObjectSystem.TypeLoader;
 using TypeObjectSystem.Tests.TypeObjectSystem.TileExample;
 using UnityEngine;
 
@@ -30,12 +30,12 @@ namespace TypeObjectSystem.Tests.TypeObjectSystem {
             Tile grassTile = tileFactory.CreateInstance(GrassIDName, new TileInstanceData(InitialPositionGrass));
 
             Assert.IsNotNull(grassTile, "Tile should not be null.");
-            Assert.IsNotNull(grassTile.PrototypeData, "Tile prototype data should not be null.");
-            Assert.IsNotNull(grassTile.InstanceData, "Tile prototype data should not be null.");
-            Assert.AreEqual(GrassIDName, grassTile.PrototypeData.IDName);
+            Assert.IsNotNull(grassTile.Type, "Tile type data should not be null.");
+            Assert.IsNotNull(grassTile.InstanceData, "Tile type data should not be null.");
+            Assert.AreEqual(GrassIDName, grassTile.Type.IDName);
             Assert.AreEqual(InitialPositionGrass, grassTile.InstanceData.Position);
-            Assert.AreEqual(GrassTileMovementCost, grassTile.PrototypeData.MovementCost);
-            Assert.AreEqual(GrassTileDefense, grassTile.PrototypeData.Defense);
+            Assert.AreEqual(GrassTileMovementCost, grassTile.Type.MovementCost);
+            Assert.AreEqual(GrassTileDefense, grassTile.Type.Defense);
 
             // Test Shortcuts
             Assert.AreEqual(GrassIDName, grassTile.IDName);
@@ -46,14 +46,14 @@ namespace TypeObjectSystem.Tests.TypeObjectSystem {
         }
 
         [Test]
-        public void Test_BasedOn_CorrectlyInstantiatesWithParent() {
+        public void Test_Parent_CorrectlyInstantiatesWithParent() {
             var tileFactory = CreateTileFactory();
             
             Tile swampTile = tileFactory.CreateInstance(SwampIDName, new TileInstanceData(InitialPositionSwamp));
             
             // Sanity check, make sure it actually loaded
             Assert.IsNotNull(swampTile, "Tile should not be null.");
-            Assert.IsNotNull(swampTile.PrototypeData, "Tile prototype data should not be null.");
+            Assert.IsNotNull(swampTile.Type, "Tile prototype data should not be null.");
             Assert.IsNotNull(swampTile.InstanceData, "Tile prototype data should not be null.");
             // Sanity check, make sure basic properties are set
             Assert.AreEqual(SwampIDName, swampTile.IDName);
@@ -61,14 +61,13 @@ namespace TypeObjectSystem.Tests.TypeObjectSystem {
             
             // Actual checks
             Assert.AreEqual(SwampTileMovementCost, swampTile.MovementCost, $"Failed to override {nameof(swampTile.MovementCost)} of {nameof(SwampIDName)}");
-            Assert.AreEqual(SwampTileDefense, swampTile.Defense, $"Failed to use property from parent class with {nameof(IPrototypeData.BasedOn)}");
+            Assert.AreEqual(SwampTileDefense, swampTile.Defense, $"Failed to use property from parent class with {nameof(IType.Parent)}");
         }
 
-        private static InstanceFactoryMonoBehaviour<Tile, TilePrototypeData, TileInstanceData> CreateTileFactory() {
-            var prototypeLoader = new JSonPrototypeLoader<TilePrototypeData>(TilesRelativePath, BasePath);
-            var prototypeCollection = new PrototypeCollection<TilePrototypeData>(prototypeLoader);
-            prototypeCollection.Initialize();
-            var tileFactory = new InstanceFactoryMonoBehaviour<Tile, TilePrototypeData, TileInstanceData>(prototypeCollection);
+        private static InstanceFactoryMonoBehaviour<Tile, TileType, TileInstanceData> CreateTileFactory() {
+            var prototypeLoader = new JSonTypeLoader<TileType>(TilesRelativePath, BasePath);
+            var prototypeCollection = new TypeCollection<TileType>(prototypeLoader);
+            var tileFactory = new InstanceFactoryMonoBehaviour<Tile, TileType, TileInstanceData>(prototypeCollection, (tile, type, instanceData) => tile.Initialize(type, instanceData));
             return tileFactory;
         }
     }
